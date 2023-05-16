@@ -7,7 +7,7 @@ package graph
 import (
 	"context"
 	"crypto/rand"
-	"example/graph/model"
+	"example/model"
 	"fmt"
 	"math/big"
 )

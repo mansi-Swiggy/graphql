@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"example/config"
-	"example/graph/model"
+	"example/model"
 )
 
 type user struct {

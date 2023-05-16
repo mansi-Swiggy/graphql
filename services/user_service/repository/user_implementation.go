@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"example/graph/model"
+	"example/model"
 )
 
 type User interface {

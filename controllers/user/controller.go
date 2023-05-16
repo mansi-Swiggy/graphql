@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 	"errors"
-	"example/graph/model"
+	"example/model"
 	"example/model/response"
 	"example/services/user_service/repository"
 	"net/http"

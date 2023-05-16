@@ -2,7 +2,7 @@ package graph
 
 import (
 	"example/controllers/user"
-	"example/graph/model"
+	"example/model"
 )
 
 // This file will not be regenerated automatically.
