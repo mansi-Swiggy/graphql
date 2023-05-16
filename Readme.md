@@ -35,3 +35,82 @@ More help to get started:
   - Command `go run github.com/99designs/gqlgen@v0.17.25 version`
 - Generate the schema:
   - Command: `go run github.com/99designs/gqlgen@v0.17.25 generate`. 
+
+
+## Questions that might arise in your mind
+
+### How do I prevent fetching child objects that might not be used?
+
+When you have nested or recursive schema like this:
+
+```graphql
+type User {
+  id: ID!
+  name: String!
+  friends: [User!]!
+}
+```
+
+You need to tell gqlgen that it should only fetch friends if the user requested it. There are two ways to do this;
+
+- #### Using Custom Models
+
+Write a custom model that omits the friends field:
+
+```go
+type User struct {
+  ID int
+  Name string
+}
+```
+
+And reference the model in `gqlgen.yml`:
+
+```yaml
+# gqlgen.yml
+models:
+  User:
+    model: github.com/you/pkg/model.User # go import path to the User struct above
+```
+
+- #### Using Explicit Resolvers
+
+If you want to Keep using the generated model, mark the field as requiring a resolver explicitly in `gqlgen.yml` like this:
+
+```yaml
+# gqlgen.yml
+models:
+  Todo:
+    fields:
+      user:
+        resolver: true # force a resolver to be generated
+```
+
+After doing either of the above and running generate we will need to provide a resolver for friends:
+
+```go
+func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	return r.todos, nil
+}
+```
+
+### Can I change the type of the ID from type String to Type Int?
+
+Yes! You can by remapping it in config as seen below:
+
+```yaml
+models:
+  ID: # The GraphQL type ID is backed by
+    model:
+      - github.com/99designs/gqlgen/graphql.IntID # a go integer
+      - github.com/99designs/gqlgen/graphql.ID # or a go string
+```
+
+This means gqlgen will be able to automatically bind to strings or ints for models you have written yourself, but the
+first model in this list is used as the default type and it will always be used when:
+
+- Generating models based on schema
+- As arguments in resolvers
+
+There isn't any way around this, gqlgen has no way to know what you want in a given context.
+
