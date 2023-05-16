@@ -44,10 +44,11 @@ More help to get started:
 When you have nested or recursive schema like this:
 
 ```graphql
-type User {
+type Todo {
   id: ID!
-  name: String!
-  friends: [User!]!
+  text: String!
+  done: Boolean!
+  user: User!
 }
 ```
 
