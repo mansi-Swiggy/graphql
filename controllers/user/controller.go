@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"example/graph/model"
-	"example/graph/services/user_service/repository"
 	"example/model/response"
+	"example/services/user_service/repository"
 	"net/http"
 	"strings"
 

@@ -31,9 +31,9 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 }
 
 // GetUser is the resolver for the getUser field.
-func (r *queryResolver) GetUser(ctx context.Context, userInput model.UserInput) (*model.UserInfo, error) {
+func (r *queryResolver) GetUser(ctx context.Context, input model.UserInput) (*model.UserInfo, error) {
 	panic(fmt.Errorf("not implemented: GetUser - getUser"))
-	data, err := r.UserResolver.GetUser(ctx, userInput)
+	data, err := r.UserResolver.GetUser(ctx, input)
 	if err != nil {
 		return &model.UserInfo{}, fmt.Errorf("Error while fetching data", err)
 	}
@@ -44,6 +44,21 @@ func (r *queryResolver) GetUser(ctx context.Context, userInput model.UserInput) 
 	return response, err
 }
 
+// Mutation returns MutationResolver implementation.
+func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
+
+// Query returns QueryResolver implementation.
+func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+
+type mutationResolver struct{ *Resolver }
+type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
 func mapInterfaceToUserInput(data interface{}) (*model.UserInfo, error) {
 	userInput, ok := data.(map[string]interface{})
 	if !ok {
@@ -59,12 +74,3 @@ func mapInterfaceToUserInput(data interface{}) (*model.UserInfo, error) {
 		Name: name,
 	}, nil
 }
-
-// Mutation returns MutationResolver implementation.
-func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
-
-// Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
-
-type mutationResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }

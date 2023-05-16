@@ -1,7 +1,7 @@
 package graph
 
 import (
-	"example/graph/controllers/user"
+	"example/controllers/user"
 	"example/graph/model"
 )
 
@@ -11,5 +11,5 @@ import (
 
 type Resolver struct {
 	todos        []*model.Todo
-	userResolver user.UserRunner
+	UserResolver user.UserRunner
 }
