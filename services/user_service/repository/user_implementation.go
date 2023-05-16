@@ -6,5 +6,5 @@ import (
 )
 
 type User interface {
-	FetchAll(ctx context.Context, search string) ([]model.User, error)
+	FetchAll(ctx context.Context, search string) ([]model.UserInfo, error)
 }

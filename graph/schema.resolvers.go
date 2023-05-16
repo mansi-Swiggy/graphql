@@ -14,7 +14,6 @@ import (
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	// panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
 	rand, _ := rand.Int(rand.Reader, big.NewInt(100))
 	todo := &model.Todo{
 		Text: input.Text,
@@ -32,7 +31,6 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 
 // GetUser is the resolver for the getUser field.
 func (r *queryResolver) GetUser(ctx context.Context, input model.UserInput) (*model.UserInfo, error) {
-	panic(fmt.Errorf("not implemented: GetUser - getUser"))
 	data, err := r.UserResolver.GetUser(ctx, input)
 	if err != nil {
 		return &model.UserInfo{}, fmt.Errorf("Error while fetching data", err)

@@ -17,15 +17,15 @@ type UserRunner interface {
 	CreateUser(ctx context.Context, input model.UserInput) (*model.User, error)
 	GetUser(ctx context.Context, request model.UserInput) (interface{}, error)
 }
-type userUsecase struct {
+type UserUsecase struct {
 	repo repository.User
 }
 
-func NewPostUseCase(repo repository.User) *userUsecase {
-	return &userUsecase{repo: repo}
+func NewPostUseCase(repo repository.User) *UserUsecase {
+	return &UserUsecase{repo: repo}
 }
 
-func (oc *userUsecase) GetUser(ctx context.Context, request model.UserInput) (interface{}, error) {
+func (oc *UserUsecase) GetUser(ctx context.Context, request model.UserInput) (interface{}, error) {
 	if len(strings.TrimSpace(request.UserRole)) == 0 {
 		return response.NewHTTPResponse(http.StatusBadRequest, "invalid params", nil), errors.New("invalid params")
 	}

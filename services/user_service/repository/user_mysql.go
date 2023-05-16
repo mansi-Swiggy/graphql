@@ -2,34 +2,38 @@ package repository
 
 import (
 	"context"
-	"database/sql"
-	"example/config"
 	"example/model"
 )
 
 type user struct {
-	DB *sql.DB
 }
 
-func NewPostsRepository(conf config.Config) *user {
-	return &user{conf.DB}
+func NewPostsRepository() *user {
+	return &user{}
 }
 func (p *user) FetchAll(ctx context.Context, search string) ([]model.UserInfo, error) {
-	var result []model.UserInfo
-	rows, err := p.DB.Query("SELECT id,name FROM user where role like '%" + search + "%'")
-	if err != nil {
-		return nil, err
+	// var result []model.UserInfo
+	result := []model.UserInfo{
+		{
+			ID:   1,
+			Name: "Aditya",
+		},
 	}
 
-	for rows.Next() {
-		var userInfo model.UserInfo
-		err = rows.Scan(&userInfo.ID, &userInfo.Name)
-		if err != nil {
-			return result, err
-		}
+	// rows, er
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-		result = append(result, userInfo)
-	}
+	// for rows.Next() {
+	// 	var userInfo model.UserInfo
+	// 	err = rows.Scan(&userInfo.ID, &userInfo.Name)
+	// 	if err != nil {
+	// 		return result, err
+	// 	}
+
+	// 	result = append(result, userInfo)
+	// }
 
 	return result, nil
 }

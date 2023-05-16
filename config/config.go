@@ -1,6 +1,9 @@
 package config
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
+)
 
 type Config struct {
 	DB *sql.DB
@@ -8,5 +11,6 @@ type Config struct {
 
 func InitConfig() Config {
 	dbConn := ConnDB()
+	log.Println("Db Connections is initialized")
 	return Config{DB: dbConn}
 }
